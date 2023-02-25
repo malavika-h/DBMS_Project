@@ -1,0 +1,46 @@
+{% extends 'console.html' %}
+
+{% block workspace %}
+<div class="flex flex-col w-full">
+    <div>
+        <a href="{% url 'team:session:timetable' pk=console.team.id %}"><i class="fa-solid fa-arrow-left-long back-btn"></i></a>
+    </div>
+    <article class="session">
+        <div class="session-head">
+            <div>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="session-title">
+                            {{ class.title }}
+                        </p>
+                    </div>
+                    <div class="session-control">
+                        {% if 'U-C' in console.perms %}
+                        <a href="{% url 'team:session:update_class' c_pk=class.pk pk=console.team.id %}"><i class="fa-solid fa-pen-clip text-green"></i></a>
+                        {% endif %}
+                        {% if 'D-C' in console.perms %}
+                        <a href="{% url 'team:session:delete_class' c_pk=class.pk pk=console.team.id %}"><i class="fa-solid fa-trash-can text-red"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="session-time">
+                    <p class="start-date">
+                        {{ notice.created_at|date:'d' }}
+                    </p>
+                    <div>
+                        <p class="start-month">
+                            {{ notice.created_at|date:'b' }}
+                        </p>
+                        <p class="time">
+                            {{ class.start_time|time:'G:i' }} - {{ class.end_time|time:'G:i' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="session-desc">{{ class.description }}</p>
+        </div>
+    </article>
+</div>
+{% endblock %}

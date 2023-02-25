@@ -1,0 +1,36 @@
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script><script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const events = [];
+    {% for event in events %}
+        events.push({
+            title: '{{ event.title }}',
+            start: '{{ event.start|date:'c' }}',
+            end: '{{ event.end|date:'c' }}',
+            description: '{{ event.title }} ({{ event.start|date:'d M H:i' }} - {{ event.end|date:'d M H:i' }})',
+            url: '{% url 'team:session:event_detail' pk=event.team_id__id e_pk=event.pk %}'
+        });
+    {% endfor %}
+    console.log(events);
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        eventDidMount: function(info) {
+            var tooltip = new Tooltip(info.el, {
+                title: info.event.extendedProps.description,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
+        },
+        events: events
+    });
+    calendar.render();
+});
+</script>
+
+<div id="calendar"></div>

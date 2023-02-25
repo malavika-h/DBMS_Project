@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<body>
+  <script>
+    document.addEventListener('click', function(event) {
+      const userConsoleToggler = document.getElementById('user-console-toggler');
+      const userConsole = document.getElementById('user-console');
+      if (userConsoleToggler.contains(event.target)) {
+        userConsole.classList.toggle('hidden');
+      } 
+      else if (!userConsole.contains(event.target)) {
+        userConsole.classList.add('hidden');
+      }
+    });
+  </script>
+  <header>
+    <nav class="bg-primary text-white flex flex-row justify-between items-center px-[15%]">
+      <ul class="py-4 space-x-10 flex items-center text-[22px]">
+        <a href="{% url 'user:dashboard' u_pk=request.user.pk %}">
+          <h5 class="cursor-pointer pb-3">College Club Management</h5>
+        </a>
+        <li class="cursor-pointer">About us</li>
+        <a href="{% url 'team:create_team' %}">
+          <li class="cursor-pointer">Start a Team</li>
+        </a>
+        <a href="{% url 'user:calendar' u_pk=request.user.pk %}">
+          <li class="cursor-pointer">Calendar</li>
+        <a href="{% url 'user:bulletin' %}">
+          <li class="cursor-pointer">Bulletin</li>
+        </a>
+      </ul>
+      <ul class="py-4 space-x-10 flex items-center text-[22px]">
+        <li class="cursor-pointer text-[30px]"><i class="fa-solid fa-bell"></i></li>
+        <li class="relative">
+          <button type="button" id="user-console-toggler"><img
+              src="{% static 'images/avatar.png' %}" id="user-avatar" /></button>
+            <div id="user-console" class="hidden">
+              <ul class="absolute flex flex-col justify-center items-center">
+                <p class="text-[24px] font-semibold">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                <p class="text-[18px] font-thin">{{ request.user.email }}</p>
+                <div class="mt-[10px] flex flex-row w-full space-x-5">
+                  <a href="{% url 'user:settings' %}"><i class="hover:scale-[1.2] fa-solid fa-gear"></i></a>
+                  <a href="{% url 'user:signout' %}" id="logout-btn" class="text-primary"><button class="px-5  hover:bg-primary hover:text-white border-solid border-2 border-primary rounded-full"> Logout</button></a>
+                </div>
+              </ul>
+            </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="flex px-[15%] pt-[2%] justify-center mf:justify-start">
+    {% block main %}
+    {% endblock %}
+  </main>
+</body>
+{% endblock %}

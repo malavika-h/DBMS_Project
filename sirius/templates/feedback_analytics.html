@@ -1,0 +1,21 @@
+{% extends 'console.html' %}
+
+{% load static %}
+
+{% block workspace %}
+<table>
+<tr>
+<td><center>
+{{ data|safe }}
+</center></td>
+</tr>
+<br>
+<br>
+<br> 
+<tr>
+<td><center>
+{{ data1|safe }}
+</center></td>
+</tr>
+</table>
+{% endblock %}

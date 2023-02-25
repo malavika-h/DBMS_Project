@@ -1,0 +1,27 @@
+{% extends 'nav.html' %}
+
+{% load static %}
+
+{% block title %}
+    Create a Team
+{% endblock %}
+    
+{% block main %}
+<div class="flex flex-row h-[100vh]">
+    <div class="form-wrapper grow mt-[10vh]">
+        <div>
+            <header>
+                <h2>Start Your Journey</h2>
+            </header>
+            <form method="POST" action="{% url 'team:create_team' %}">
+                {% csrf_token %}
+                {% include 'form.html' with form=form %}
+                <input type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+    <div class="grow hidden mf:flex mf:w-1/2 justify-center items-start py-[8%]">
+        <img src="{% static 'images/woman_working.svg' %}" />
+    </div>
+</div>
+{% endblock %}

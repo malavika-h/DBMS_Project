@@ -1,0 +1,55 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+Bulletin
+{% endblock %}
+
+{% block main %}
+<div class="flex flex-col mf:flex-row w-full">
+    <section class="w-full mf:w-[90%] flex flex-col items-center mf:items-start">
+        <h3 class="mb-[2%]">Bulletin</h3>
+        <ul class="w-full mf:w-[80%] m-auto">
+            {% for notice in notices %}
+            <li>
+                <article class="user-session">
+                    <div class="session-head">
+                        <div>
+                            <div class="flex sm:flex-row items-center flex-wrap-reverse justify-between">
+                                <div class="session-time !w-fit">
+                                    <p class="start-date">
+                                        {{ notice.created_at|date:'d' }}
+                                    </p>
+                                    <div>
+                                        <p class="start-month">
+                                            {{ notice.created_at|date:'b' }}
+                                        </p>
+                                        <p class="time">
+                                            {{ notice.created_at|date:'H:m' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <a href="{% url 'team:team_info' pk=notice.team_id__id %}">
+                                    <div class="session-team">
+                                        <p>
+                                            {{ notice.team_id__name }}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                <p class="session-title">
+                                    {{ notice.title }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="session-desc">{{ notice.description }}</p>
+                    </div>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+{% endblock %}

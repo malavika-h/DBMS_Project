@@ -1,0 +1,72 @@
+{% extends 'nav.html' %}
+
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block links %}
+    <script src="{% static 'js/send_join_request.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <script>
+        document.addEventListener('DOMContentLoaded', (e) => {
+            const reqs = Array.prototype.slice.call(document.getElementsByClassName('req-status'));
+            console.log(reqs)
+            for (let req of reqs) {
+                const id = req.id.replace('status', 'badge');
+                const badge = document.getElementById(id);
+                const status = req.innerHTML;
+                if(status == 'Pending') {
+                    badge.classList.add('bg-yellow')
+                } else if (status == 'Accepted') {
+                    badge.classList.add('bg-green');
+                } else if (status == 'Rejected') {
+                    badge.classList.add('bg-red');
+                }
+            }
+        })
+    </script>
+    <div class="flex flex-col mf:flex-row w-full">
+        <section class="w-full mf:w-[90%] flex flex-col items-center mf:items-start">
+            <h3 class="mb-[2%]">Yours Teams</h3>
+            <ul class="flex flex-col justify-center">
+                <div class="flex flex-wrap justify-center mf:justify-start gap-[35px]">
+                    {% for team in teams %}
+                    <li class="hover:scale-[1.05] flex flex-col items-center h-[250px] justify-between pb-2 bg-white shadow rounded-lg w-[250px] overflow-clip"><a href="{% url 'team:team_info' pk=team.team_id__id %}">
+                            <div class="h-[190px] overflow-clip mb-[6px]">
+                                <img class="w-full" src="https://picsum.photos/300/300?random={{ team.team_id__id }}"/>
+                            </div>
+                            <p class="text-grey font-400 text-[32px] text-center">{{ team.team_id__name|truncatechars:8 }}<span class="text-[18px]">#{{ team.team_id__id|truncatechars:5 }}</span></p>
+                    </a></li>
+                    {% endfor %}
+                </div>
+            </ul>
+        </section>
+        <div class="mb-[10vh] flex flex-col items-center pt-[75px]">
+            <section class="form-wrapper small-console mt-0 h-fit">
+                <h4>Send a Request</h4>
+                <form method="POST" action="{% url 'team:send_join_request' %}">
+                    {% csrf_token %}
+                    {% include 'form.html' with form=join_form %}
+                    <input type="hidden" name="user_id" value="{{ request.user.pk }}">
+                    <input type="submit" value="Join" class="mb-0">
+                </form>
+            </section>
+            <section class="small-console mt-[35px]">
+                <h4>Join Requests</h4>
+                <ul class="w-full pl-[16px] max-h-[240px] overflow-y-scroll mt-[16px] flex flex-col space-y-[10px]">
+                    {% for req in join_requests %}
+                        <li class="flex items-center">
+                            <span class="inline-block h-[50px] w-[24px] mr-[16px]" id="req-badge-{{ req.pk }}"></span>
+                            <span class="font-poppins text-[24px] text-grey tracking-[0.06rem] font-[500] min-w-[160px]">{{ req.team_id|truncatechars:6 }}</span>
+                            <span class="inline-block ml-[16px] text-grey font-[300] italic text-[18px] req-status" id="req-status-{{ req.pk }}">{{ req.get_status_display }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </div>
+{% endblock %}

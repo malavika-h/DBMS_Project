@@ -1,0 +1,58 @@
+{% extends 'console.html' %}
+
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'plugins/timetable.js-master/dist/styles/timetablejs.css' %}">
+    <script src="{% static 'plugins/timetable.js-master/dist/scripts/timetable.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+    document.addEventListener('DOMContentLoaded', function() {
+        const days = [];
+        var options = {};
+        {% for day in days %}days.push('{{day.1}}');{% endfor %}
+        const timetable = new Timetable();
+        timetable.setScope({% if classes %}{{ classes.0.start_time.hour }}{% else %}0{% endif %}, 23);
+        timetable.addLocations(days);
+        {% for class in classes %}
+            options = {
+                url: '{% url 'team:session:class_detail' pk=console.team.id c_pk=class.pk %}',
+                class: 'class-tile class-{{class.pk}}',
+            };
+            timetable.addEvent(
+                '{{ class.title }}',
+                '{{ class.get_day_display }}',
+                new Date(2015, 7, 17, {{ class.start_time.hour }}, {{ class.start_time.minute }}),
+                new Date(2015, 7, 17, {{ class.end_time.hour }}, {{ class.end_time.minute }}),
+                options
+            );
+        {% endfor %}
+        var renderer = new Timetable.Renderer(timetable);
+        renderer.draw('.timetable'); // any css selector
+        var ele;
+        {% for class in classes %}
+            ele = document.querySelector('.class-{{class.pk}}');
+            ele.setAttribute('title', '{{ class.title }}\n({{ class.start_time|time:'G:i' }} - {{ class.end_time|time:'G:i' }})');
+        {% endfor %}
+    });
+{% endblock %}
+
+{% block style %}
+.fc {}
+.fc-h-event {}
+.fc .fc-daygrid-event-dot {}
+{% endblock %}
+
+{% block workspace %}
+<div class="w-full">
+    <div class="module-head">
+        <h2>Timetable</h2>
+        {% if 'C-C' in console.perms %}
+            <a href="{% url 'team:session:create_class' pk=console.team.id %}"><i class="fa-solid fa-calendar-plus add-icon"></i></a>
+        {% endif %}
+    </div>
+    <p class="italic text-grey my-[8px]" id="remove-hint">Click on class tiles for additional details</p>
+    <div class="timetable" id="timetable-div"></div>
+</div>
+{% endblock %}

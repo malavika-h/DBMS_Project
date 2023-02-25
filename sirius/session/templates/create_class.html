@@ -1,0 +1,31 @@
+{% extends 'console.html' %}
+    
+{% block workspace %}
+<div class="form-wrapper flex items-center w-full">
+    <div>
+        <h2>Class</h2>
+        <form method="POST" action="
+            {% if '/create/' in request.path %}
+            {% url 'team:session:create_class' pk=console.team.id %}
+            {% else %}
+            {% url 'team:session:update_class' c_pk=c_pk pk=console.team.id %}
+            {% endif %}
+        ">
+            {% csrf_token %}
+            {% include 'form.html' with form=form %}
+            <input
+                type="submit"
+                value="{% if '/create/' in request.path %}Create{% else %}Save{% endif %}"
+                class="!w-[180px] mx-auto {% if '/update/' in request.path %}!bg-green{% endif %}"
+            >
+            <!-- {% if '/create/' in request.path %}
+                <input
+                    type="submit"
+                    value="Add another"
+                    class="!w-[180px] !text-[24px] mx-auto !bg-green"
+                >
+            {% endif %} -->
+        </form>
+    </div>
+</div>
+{% endblock %}

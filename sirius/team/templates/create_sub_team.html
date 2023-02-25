@@ -1,0 +1,14 @@
+{% extends 'console.html' %}
+
+{% block workspace %}
+<div class="form-wrapper flex items-center w-full">
+    <div>
+        <h2>Sub Team</h2>
+        <form method="POST" action="{% url 'team:create_sub_team' pk=console.team.id %}">
+            {% csrf_token %}
+            {% include 'form.html' with form=form %}
+            <input type="submit" value="Create" class="!w-[180px] mx-auto">
+        </form>
+    </div>
+</div>
+{% endblock %}

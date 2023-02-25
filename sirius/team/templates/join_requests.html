@@ -1,0 +1,34 @@
+{% extends 'console.html' %}
+
+{% load static %}
+
+{% block workspace %}
+    <div class="flex w-full justify-center grow">
+        <div class="flex w-full flex-col items-center">
+            {% for jr in requests %}
+                <div class="rounded-lg flex min-w-[500px] w-[64%] flex-row shadow-xl items-center px-[40px] py-[20px]">
+                    <div class="w-[100px] h-[100px] rounded-full overflow-clip mr-[18px]">
+                        <img src="{% static 'images/avatar.png' %}" />
+                    </div>
+                    <div class="flex flex-col text-[36px] font-poppins text-grey space-y-[-12px]">
+                        <p class="my-auto ">{{ jr.user_id__first_name }}</p>
+                        <p class="text-grey/50 text-[18px]">@{{ jr.user_id__username }}</p>
+                    </div>
+                    {% if "U-JR" in console.perms %}
+                    <div class="my-[auto] flex grow justify-end">
+                        <form action="{% url 'team:accept_join_request' pk=jr.pk%}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit"><i class="mr-[50px] fas fa-check-circle text-[50px] text-[#83CE00]"></i></button>
+                        </form>
+                        <form action="{% url 'team:decline_join_request' pk=jr.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit"><i
+                                    class="mx-[5px] fa-solid fa-circle-xmark text-[50px] text-[#FF3D00]"></i></button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

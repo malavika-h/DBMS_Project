@@ -1,0 +1,29 @@
+{% if form.non_field_errors %}
+    <ul class="form-errors">
+        {% for err in form.non_field_errors %}
+            <li>{{ err }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<ul>
+{% for field in form.visible_fields %}
+<li>
+    <p>
+        {{ field.label_tag|cut:':' }}
+    </p>
+    {{ field }}
+    {% if field.help_text %}
+        <p class="field-help">
+            {{ field.help_text }}
+        </p>
+    {% endif %}
+    {% if field.errors %}
+        <ul class="field-errors">
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>
+{% endfor %}
+</ul>

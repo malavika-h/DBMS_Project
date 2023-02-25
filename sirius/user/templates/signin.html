@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block body %}
+
+<body>
+    <div class="flex flex-row h-[100vh]">
+        <div class="form-wrapper mt-[10vh]">
+            <div>
+                <header>
+                    <a href="{% url 'landing' %}"><h5 class="text-primary">College Club System</h5></a>
+                    <h6>New to the platform? <a href="{% url 'user:signup' %}"><span class="text-blue">Signup</span></a></h6>
+                    <h2>Login</h2>
+                </header>
+                <form method="POST" action="{% url 'user:signin' %}">
+                    {% csrf_token %}
+                    {% include 'form.html' with form=form %}
+                    <input id="grid-first-name"  type="submit" value="Login">
+                    {% if request.GET.next %}
+                    <input type="hidden" name="text" value="{{ request.GET.next }}">
+                    {% endif %}
+                    <section>
+                        <p class="flex justify-center">Or signup with</p>
+                        <ul class="flex justify-around flex-row text-[45px] py-[4%]">
+                            <li><i class="fa-brands fa-google"></i></li>
+                            <li><i class="fa-brands fa-facebook-f"></i></li>
+                            <li><i class="fa-brands fa-github"></i></li>
+                        </ul>
+                    </section>
+                </form>
+            </div>
+        </div>
+        <div class="grow bg-primary hidden md:flex md:w-1/2 justify-center items-center px-[5%]">
+            <blockquote>
+                <div>
+                    <i class="fa-solid fa-quote-left"></i>
+                </div>
+                <cite>Oscar Wilde</cite>
+                <p>Be yourself; everyone else is already taken.</p>
+            </blockquote>
+        </div>
+    </div>
+</body>
+{% endblock %}

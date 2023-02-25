@@ -1,0 +1,242 @@
+[
+  {
+    "model": "authorization.Permission",
+    "pk": 1,
+    "fields": {
+      "action": "C",
+      "relation": "E"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 2,
+    "fields": {
+      "action": "R",
+      "relation": "E"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 3,
+    "fields": {
+      "action": "U",
+      "relation": "E"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 4,
+    "fields": {
+      "action": "D",
+      "relation": "E"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 5,
+    "fields": {
+      "action": "C",
+      "relation": "T"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 6,
+    "fields": {
+      "action": "R",
+      "relation": "T"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 7,
+    "fields": {
+      "action": "U",
+      "relation": "T"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 8,
+    "fields": {
+      "action": "D",
+      "relation": "T"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 9,
+    "fields": {
+      "action": "C",
+      "relation": "R"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 10,
+    "fields": {
+      "action": "R",
+      "relation": "R"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 11,
+    "fields": {
+      "action": "U",
+      "relation": "R"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 12,
+    "fields": {
+      "action": "D",
+      "relation": "R"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 13,
+    "fields": {
+      "action": "C",
+      "relation": "N"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 14,
+    "fields": {
+      "action": "R",
+      "relation": "N"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 15,
+    "fields": {
+      "action": "U",
+      "relation": "N"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 16,
+    "fields": {
+      "action": "D",
+      "relation": "N"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 17,
+    "fields": {
+      "action": "C",
+      "relation": "C"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 18,
+    "fields": {
+      "action": "R",
+      "relation": "C"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 19,
+    "fields": {
+      "action": "U",
+      "relation": "C"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 20,
+    "fields": {
+      "action": "D",
+      "relation": "C"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 21,
+    "fields": {
+      "action": "R",
+      "relation": "M"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 22,
+    "fields": {
+      "action": "U",
+      "relation": "M"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 23,
+    "fields": {
+      "action": "D",
+      "relation": "M"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 24,
+    "fields": {
+      "action": "R",
+      "relation": "JR"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 25,
+    "fields": {
+      "action": "U",
+      "relation": "JR"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 26,
+    "fields": {
+      "action": "D",
+      "relation": "JR"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 27,
+    "fields": {
+      "action": "C",
+      "relation": "I"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 28,
+    "fields": {
+      "action": "R",
+      "relation": "I"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 29,
+    "fields": {
+      "action": "U",
+      "relation": "I"
+    }
+  },
+  {
+    "model": "authorization.Permission",
+    "pk": 30,
+    "fields": {
+      "action": "D",
+      "relation": "I"
+    }
+  }
+]

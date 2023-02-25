@@ -1,0 +1,661 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1 {
+        @apply
+        text-[48px] 
+        leading-[56px]
+        md:text-[64px]
+        font-poppins 
+        font-bold;
+    }
+    h2 {
+        @apply
+        text-[48px]
+        text-grey
+        font-semibold;
+    }
+    h3 {
+        @apply
+        font-poppins
+        text-[36px]
+        uppercase
+        tracking-[0.06rem]
+        font-[700]
+        text-grey;
+    }
+    h4 {
+        @apply
+        font-poppins
+        font-[700]
+        text-[28px]
+        tracking-[0.06rem]
+        text-grey
+        underline; 
+    }
+    h5 {
+        @apply
+        text-[36px]
+        font-semibold;
+    }
+    h6 {
+        @apply
+        text-[24px];
+    }
+
+    button,
+    input[type="submit"] {
+        @apply
+        hover:scale-[1.05]
+    }
+
+    blockquote {
+        @apply
+        text-white
+        font-poppins;
+    }
+    blockquote i {
+        @apply
+        text-[50px]
+        relative
+        right-[10px]
+        block;
+    }
+    blockquote cite {
+        @apply
+        text-[48px]
+        font-bold
+        not-italic;
+    }
+    blockquote p {
+        @apply
+        text-[36px];
+    }
+
+    input:disabled {
+        @apply
+        text-grey/50;
+    }
+
+    select option {
+        @apply
+        text-[18px];
+    }
+}
+
+@layer components {
+    .btn-s {
+        @apply 
+        px-[56px] 
+        py-[10px] 
+        flex
+        bg-orange 
+        font-poppins 
+        text-white
+        rounded-[50px];
+    }
+
+    .feature-list i {
+        @apply
+        text-white
+        text-[40px]
+        flex
+        bg-dark-yellow
+        h-[72px]
+        w-[72px]
+        rounded-[32px]
+        justify-center
+        items-center;
+    }
+    .feature-list span {
+        @apply
+        font-poppins
+        text-[32px]
+        font-medium;
+    }
+    .feature-list li {
+        @apply
+        flex
+        space-x-[40px];
+    }
+    .feature-list {
+        @apply
+        flex-col
+        space-y-[28px];
+    }
+
+    .console-navs {
+        @apply
+        flex
+        flex-row
+        flex-nowrap
+        w-[280px]
+        pt-2
+        pb-2
+        text-[26px]
+        font-light
+        hover:bg-grey/10
+        hover:scale-[1.05];
+    }
+
+    .console-nav-icon {
+        @apply
+        mr-3
+    }
+
+    .form-wrapper {
+        @apply
+        flex
+        flex-col
+        w-full
+        md:w-1/2
+        items-center;
+    }
+    .form-wrapper > div {
+        @apply
+        w-[80%]
+        max-w-[320px];
+    }
+    .form-wrapper input,
+    .form-wrapper select,
+    .form-wrapper textarea {
+        @apply
+        w-full
+        h-[52px]
+        rounded-sm
+        pl-[22px];
+    }
+    .form-wrapper textarea {
+        @apply
+        !h-[240px];
+    }
+    .form-wrapper label {
+        @apply
+        text-[18px]
+        text-grey
+        relative
+        left-[12px]
+        top-[12px]
+        inline-block
+        bg-white
+        px-[10px];
+    }
+    .form-wrapper input[type="submit"],
+    .save-btn {
+        @apply
+        text-white
+        text-[32px]
+        w-full
+        bg-primary
+        rounded-[8px]
+        my-[32px]
+        block
+        h-[64px]
+        cursor-pointer
+        pl-0;
+    }
+
+    .save-btn {
+        @apply
+        bg-green
+        w-fit
+        px-[32px]
+        text-[24px]
+        h-fit
+        py-[8px]
+        mx-auto;
+    }
+
+    .form-errors,
+    .field-errors {
+        @apply
+        text-red;
+    }
+
+    .field-help {
+        @apply
+        text-dark-yellow;
+    }
+
+    .active-indicator {
+        @apply
+        w-[22px]
+        bg-primary
+        mr-3
+        invisible;
+    }
+
+    .active-tab {
+        @apply
+        font-semibold;
+    }
+    .active-tab div:first-child {
+        @apply
+        !visible;
+    }
+
+    #user-avatar {
+        @apply
+        w-[60px]
+        h-[60px]
+        rounded-[30px];
+    }
+
+    #user-console {
+        @apply
+        text-grey;
+    }
+    #user-console ul {
+        @apply
+        bg-white
+        right-[10%]
+        rounded-md
+        px-[20px]
+        py-[20px]
+        drop-shadow-xl;
+    }
+
+    .small-console {
+        @apply
+        w-[340px]
+        border-solid
+        border-2
+        py-6
+        flex
+        flex-col
+        items-center
+        justify-center;
+    }
+    .small-console form {
+        @apply
+        w-3/4;
+    }
+    .small-console input {
+        @apply
+        w-full;
+    }
+    .small-console input[type="submit"] {
+        @apply
+        w-[140px]
+        mx-auto
+        h-[54px]
+        mb-0;
+    }
+
+    .session {
+        @apply
+        shadow-lg
+        min-w-[460px]
+        rounded-lg
+        mb-[32px]
+        py-[32px]
+        px-[48px];
+    }
+    .user-session {
+        @apply
+        shadow-lg
+        rounded-lg
+        mb-[32px]
+        py-[32px]
+        px-[48px];
+    }
+    .session .session-control,
+    .role-control {
+        @apply
+        flex
+        !flex-row
+        items-center
+        justify-center
+        ml-[10px]
+        text-[20px];
+    }
+    .session-control i {
+        @apply
+        hover:bg-grey/20
+        rounded-full
+        w-[40px]
+        h-[40px]
+        justify-center
+        items-center
+        cursor-pointer
+        flex
+        hover:text-[22px];
+    }
+    .session .session-desc,
+    .user-session .session-desc {
+        @apply
+        text-grey/70
+        text-[22px]
+        leading-[110%]
+        pt-[10px]
+        text-justify
+        font-poppins;
+    }
+    .session-time {
+        @apply
+        flex
+        flex-row
+        flex-wrap
+        items-center
+        gap-y-[-24px]
+        space-x-[8px];
+        
+    }
+    .session-time div {
+        @apply
+        flex
+        flex-col
+        space-y-[-8px];
+    }
+    .session-time .start-date {
+        @apply
+        font-poppins
+        font-[500]
+        text-[52px]
+        text-grey;
+    }
+    .session-time .start-month,
+    .session-time .time {
+        @apply
+        font-poppins
+        font-[500]
+        text-[20px]
+        text-grey
+    }
+    .session-time .start-month {
+        @apply
+        uppercase;
+    }
+    .session-title {
+        @apply
+        text-[36px]
+        text-grey
+        font-[600]
+        font-poppins;
+    }
+    .session-team {
+        @apply
+        bg-orange/60
+        hover:scale-[1.05]
+        rounded-full
+        w-fit
+        px-[32px]
+        py-[4px]
+        cursor-pointer;
+    }
+    .session-team p {
+        @apply
+        text-[20px]
+        font-poppins
+        font-[500]
+        text-white;
+    }
+    .session-head {
+        @apply
+        flex
+        flex-col
+        space-y-[-24px]
+        border-b-2;
+    }
+
+    .member-card {
+        @apply
+        text-grey
+        border-b-2
+        flex
+        flex-row
+        items-center
+        justify-between
+        px-[10%]
+        pb-[4%]
+        hover:scale-[1.05]
+        w-[400px];
+    }
+    .member-card .member-name {
+        @apply
+        font-[500]
+        text-[24px];
+    }
+    .member-card .member-role {
+        @apply
+        font-[500]
+        uppercase;
+    }
+    .member-username {
+        @apply
+        font-poppins
+        text-[18px]
+        font-[500]
+        text-grey/50;
+    }
+
+    .perm-list {
+        @apply
+        flex
+        flex-row
+        flex-wrap
+        grow
+        gap-x-[12px]
+        gap-y-[12px]
+        text-grey
+        mb-[16px];
+    }
+    .perm-list .perm-tile {
+        @apply
+        flex
+        py-[12px]
+        px-[16px]
+        items-center
+        rounded-md
+        space-x-[8px]
+        hover:scale-[1.05]
+        cursor-pointer;
+    }
+
+    .class-tile {
+        @apply
+        rounded-[10px]
+        flex
+        flex-col
+        items-center
+        text-white
+        !bg-brown/80
+        tracking-[0.1rem]
+        font-poppins
+        overflow-y-hidden
+        justify-center
+        box-border
+        !border-0
+        !h-[58px]
+        !text-[24px]
+        !cursor-help
+        hover:!bg-brown;
+    }
+    .class-tile .class-title {
+        @apply
+        font-[500];
+    }
+    .class-tile .class-time {
+        @apply
+        text-[16px]
+        font-[400];        
+    }
+
+    .popup-container{
+        @apply
+        w-[100vw]
+        h-[100vh]
+        fixed
+        inset-0
+        bg-gray-500
+        bg-opacity-75
+        transition-opacity
+        flex
+        justify-center
+        pt-[4vh]
+        z-50;
+    }
+    .popup {
+        @apply
+        h-fit
+        flex
+        shadow-md
+        w-[460px]
+        py-[28px]
+        items-center
+        flex-col
+        bg-white
+        rounded-lg;
+    }
+    .popup p {
+        @apply
+        italic
+        font-poppins
+        font-[300];
+    }
+    .popup button {
+        @apply
+        w-[140px]
+        flex
+        border-2
+        py-[6px]
+        justify-center
+        rounded-md
+        text-[18px]
+        font-[400]
+        text-grey;
+    }
+    .popup div {
+        @apply
+        flex
+        justify-center
+        gap-x-[16px];
+    }
+    .popup-yes {
+        @apply
+        border-green
+        hover:text-white
+        hover:bg-green;
+    }
+    .popup-no {
+        @apply
+        border-red
+        hover:text-white
+        hover:bg-red;
+    }
+
+    .timetable {
+        @apply
+        w-full
+        min-w-[420px];
+    }
+    .timetable aside {
+        @apply
+        min-w-[120px];
+    }
+    .timetable aside li {
+        @apply
+        bg-white
+        !border-b-2
+        !border-grey
+        flex
+        items-end
+        pl-0
+        !h-[64px];
+    }
+    .timetable .row-heading {
+        @apply
+        font-poppins
+        font-[400]
+        text-[20px]
+        uppercase
+        tracking-[0.1rem];
+    }
+    .timetable ul.room-timeline li {
+        @apply
+        !h-[64px]
+        flex
+        items-center;
+    }
+    .timetable .time-label {
+        @apply
+        font-poppins
+        text-grey;
+    }
+
+    .add-icon {
+        @apply
+        text-[32px]
+        text-green
+        hover:scale-[1.2];
+    }
+
+    .module-head {
+        @apply
+        flex
+        items-center
+        gap-x-[24px];
+    }
+
+    .back-btn {
+        @apply
+        text-grey
+        text-[24px]
+        hover:bg-grey/20
+        h-[48px]
+        w-[48px]
+        rounded-full
+        flex
+        justify-center
+        items-center
+        mb-[2vh]
+        hover:scale-[1.2]
+        cursor-pointer;
+    }
+
+    #fc-dom-1 {
+        @apply
+        !text-grey;
+    }
+    .fc .fc-button-primary:disabled {
+        @apply
+        !bg-grey;
+    }
+    .fc .fc-button-primary {
+        @apply
+        !bg-grey;
+    }
+    .fc-h-event {
+        @apply
+        !bg-brown/80
+        !border-0
+        hover:!bg-brown;
+    }
+    .fc-daygrid-event-dot {
+        @apply
+        !bg-brown
+        !border-brown;
+    }
+    .fc .fc-daygrid-event {
+        @apply
+        !text-grey;
+    }
+
+    .tooltip {
+        @apply
+        flex
+        z-50
+        bg-white/90
+        text-grey
+        font-poppins
+        mb-[8px]
+        !w-[100px]
+        !text-[12px]
+        px-[10px]
+        py-[10px]
+        text-center
+        rounded-lg;
+    }
+}

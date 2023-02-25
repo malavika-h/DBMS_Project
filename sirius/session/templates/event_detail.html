@@ -1,0 +1,59 @@
+{% extends 'console.html' %}
+
+{% block workspace %}
+<div class="flex flex-col w-full">
+    <div>
+        <a href="{% url 'team:session:calendar' pk=console.team.id %}"><i class="fa-solid fa-arrow-left-long back-btn"></i></a>
+    </div>
+    <article class="session">
+        <div class="session-head">
+            <div>
+                <div class="flex justify-between">
+                    <div class="session-time">
+                        <p class="start-date">
+                            {{ event.start|date:'d' }}
+                        </p>
+                        <div>
+                            <p class="start-month">
+                                {{ event.start|date:'b' }}
+                            </p>
+                            <p class="time">
+                                {{ event.start|date:'dS' }} - {{ event.end|date:'dS' }} | {{ event.start|date:'H:m' }} - {{ event.end|date:'H:m' }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="session-control">
+                        {% if 'U-E' in console.perms %}
+                            <a href="{% url 'team:session:update_event' e_pk=event.pk pk=console.team.id %}"><i class="fa-solid fa-pen-clip text-green"></i></a>
+                        {% endif %}
+                        {% if 'D-E' in console.perms %}
+                            <a href="{% url 'team:session:delete_event' e_pk=event.pk pk=console.team.id %}"><i class="fa-solid fa-trash-can text-red"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <p class="session-title">
+                        {{ event.title }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="session-desc">{{ event.description }}</p>
+        </div>
+        <div>
+            <br>
+            <table style="width: 100%">
+            <tr>
+        <td>
+            <form action="{% url 'team:session:event_feedback' e_pk=event.pk pk=console.team.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit"><i class="ml-[50px] fa-solid fa-comment text-[30px] text-[#83CE00]"></i>Feedback</button>
+            </form>
+        </td>
+    </tr>
+</table>
+        </div>
+    </article>
+</div>
+{% endblock %}

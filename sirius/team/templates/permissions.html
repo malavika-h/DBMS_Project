@@ -1,0 +1,28 @@
+{% extends 'console.html' %}
+
+{% block title %}
+    {{ team.name }}
+{% endblock %}
+
+{% block workspace %}
+<div>
+<h2> Permissions</h2>
+{% for perm in perms %}
+    <div class="row">
+        <p >
+            {{ perm.user_id__firstname }}
+        </p>
+        <p>
+            {{ perm.permission_name }}
+        </p>
+    </div>
+{% endfor %}
+
+<h2>Your Perms</h2>
+    {% for perm in perms_list %}
+    <p> {{ perm.permission_name }} </p>
+    {% endfor %}
+
+
+</div>
+{% endblock %}

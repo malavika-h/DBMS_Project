@@ -1,0 +1,30 @@
+{% extends 'nav.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{ request.user.username }}
+{% endblock %}
+    
+{% block main %}
+<div class="w-full flex flex-wrap-reverse lg:flex-row lg:flex-nowrap justify-center mt-[4vh] gap-y-[2vh]">
+    <div class="items-center hidden mf:flex">
+        <img src="{% static 'images/tools.png' %}" class="h-fit w-[560px]" />
+    </div>
+    <div class="form-wrapper flex items-center w-full">
+        <div>
+            <h2>Account</h2>
+            <form method="POST" action="{% url 'user:settings' %}">
+                {% csrf_token %}
+                {% include 'form.html' with form=form %}
+                <input type="submit" value="Save" class="!w-[180px] mx-auto !bg-green">
+            </form>
+        </div>
+    </div>
+    <div class="flex items-center">
+        <div class="w-[300px] h-[300px] rounded-[150px] overflow-clip">
+            <img src="{% static 'images/avatar.png' %}" class="h-fit" />
+        </div>
+    </div>
+</div>
+{% endblock %}

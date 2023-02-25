@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Signup
+{% endblock %}
+
+{% block body %}
+
+<body>
+    <div class="flex flex-row">
+        <div class="form-wrapper mt-[10vh] mb-[10vh]">
+            <div>
+                <header>
+                    <a href="{% url 'landing' %}">
+                        <h5 class="text-primary">College Club System</h5>
+                    </a>
+                    <h6>Have an account? <a href="{% url 'user:signin' %}"><span class="text-blue">Login</span></a></h6>
+                    <h2>Signup</h2>
+                </header>
+                <form method="POST" action="{% url 'user:signup' %}">
+                    {% csrf_token %}
+                    {% include 'form.html' with form=form %}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="grow bg-primary hidden md:flex md:w-1/2 justify-center items-center px-[5%]">
+            <blockquote>
+                <div>
+                    <i class="fa-solid fa-quote-left"></i>
+                </div>
+                <cite>13 Hours</cite>
+                <p>All the gods, all the heavens, all the hells are within you.</p>
+            </blockquote>
+        </div>
+    </div>
+</body>
+{% endblock %}

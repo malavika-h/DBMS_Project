@@ -1,0 +1,55 @@
+{% extends 'console.html' %}
+
+{% block workspace %}
+<div class="flex flex-col w-full">
+    <div class="module-head">
+        <h2>Notice Board</h2>
+        {% if 'C-N' in console.perms %}
+            <a href="{% url 'team:session:create_notice' pk=console.team.id %}"><i class="fa-solid fa-circle-plus add-icon"></i></a>
+        {% endif %}
+    </div>
+    <ul>
+        {% for notice in notices %}
+            <li>
+                <article class="session">
+                    <div class="session-head">
+                        <div>
+                            <div class="flex justify-between">
+                                <div class="session-time">
+                                    <p class="start-date">
+                                        {{ notice.created_at|date:'d' }}
+                                    </p>
+                                    <div>
+                                        <p class="start-month">
+                                            {{ notice.created_at|date:'b' }}
+                                        </p>
+                                        <p class="time">
+                                            {{ notice.created_at|date:'H:m' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="session-control">
+                                    {% if 'U-N' in console.perms %}
+                                        <a href="{% url 'team:session:update_notice' n_pk=notice.pk pk=console.team.id %}"><i class="fa-solid fa-pen-clip text-green"></i></a>
+                                    {% endif %}
+                                    {% if 'D-N' in console.perms %}
+                                        <a href="{% url 'team:session:delete_notice' n_pk=notice.pk pk=console.team.id %}"><i class="fa-solid fa-trash-can text-red"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div>
+                                <p class="session-title">
+                                    {{ notice.title }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="session-desc">{{ notice.description }}</p>
+                    </div>
+                </article>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

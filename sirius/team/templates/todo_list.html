@@ -1,0 +1,38 @@
+{% extends 'console.html' %}
+
+{% load static %}
+
+{% block workspace %}
+    <div class="flex w-full justify-center grow">
+        <div class="flex w-full flex-col items-center">
+            <div style="height:50px">
+                <form method="GET" action="{% url 'team:create_an_item' pk=console.team.id %}" style="height:50px">
+                    {% csrf_token %}
+                        <button type="submit"><i class="mr-[100px] fas fa-plus-circle text-[50px] text-[#83CE00]"></i>Add new item</button>
+                </form>
+            </div>
+            {% for item in items %}
+                <div class="rounded-lg flex min-w-[500px] w-[64%] flex-row shadow-xl items-center px-[40px] py-[20px]">
+                    <div class="w-[100px] h-[100px] rounded-full overflow-clip mr-[18px]">
+                        <img src="{% static 'images/perms.png' %}" />
+                    </div>
+                    <div class="flex flex-col text-[36px] font-poppins text-grey space-y-[-12px]">
+                        {% if item.done %}
+                            <p class="text-grey/50 text-[18px]"><strike>{{ item.name }}</strike></p>
+                        {% else %}
+                        <p class="text-grey/50 text-[18px]">{{ item.name }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="my-[auto] flex grow justify-end">
+                        <form method="GET" action="{% url 'team:edit_an_item' pk=console.team.id id=item.id %}">
+                            {% csrf_token %}
+                                <button type="submit"><i class="mr-[50px] fas fa-check-circle text-[50px] text-[#83CE00]"></i>Edit</button>
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                <p>You have nothing to do.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

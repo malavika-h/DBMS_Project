@@ -1,0 +1,14 @@
+{% extends 'console.html' %}
+
+{% block workspace %}
+<div class="flex flex-col w-full">
+    <div class="module-head">
+        <h2>Calendar</h2>
+        {% if 'C-E' in console.perms %}
+            <a href="{% url 'team:session:create_event' pk=console.team.id %}"><i class="fa-solid fa-calendar-plus add-icon"></i></a>
+        {% endif %}
+    </div>
+    <p class="italic text-grey my-[8px]" id="remove-hint">Click on event tiles for additional details</p>
+    {% include 'calendar_util.html' with events=events console=console %}
+</div>
+{% endblock %}

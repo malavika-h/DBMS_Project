@@ -1,0 +1,138 @@
+{% extends 'console.html' %}
+
+{% block script %}
+    let currRole;
+    let roleIn;
+    let roleOut;
+    let addHint;
+    let removeHint;
+    let roleIdInput;
+    let permStringInput;
+    let rolePerm;
+    let allPermissions = [];
+    let submitButton;
+    let roleDict = {{ role_based_perms }};
+    document.addEventListener('DOMContentLoaded', function() {
+        currRole = {{ roles.first.pk }};
+        roleIn = document.getElementById('role-in');
+        addHint = document.getElementById('add-hint');
+        removeHint = document.getElementById('remove-hint');
+        roleIdInput = document.getElementById('role-pk-in');
+        permStringInput = document.getElementById('perm-string-in');
+        roleOut = document.getElementById('role-out');
+        submitButton = document.getElementById('upt-form-submit')
+        {% for perm in all_permissions %}
+            allPermissions.push({
+                'pk': {{ perm.pk }},
+                'action': "{{ perm.get_action_display }}",
+                'relation': "{{ perm.get_relation_display }}"
+            });
+        {% endfor %}
+        fillRoles();
+    });
+    function fillRoles() {
+        roleIn.innerHTML = '';
+        roleOut.innerHTML = '';
+        rolePerm = roleDict[currRole];
+        allPermissions.forEach((perm) => {
+            const li = document.createElement('li');
+            li.classList.add('perm-tile')
+            li.innerHTML = `${perm.action} ${perm.relation}`;
+            li.id = `perm-${perm.pk}`;
+            if (rolePerm.includes(perm['pk'])) {
+                removeHint.classList.remove('hidden');
+                li.classList.add('bg-light-blue');
+                {% if "U-R" in console.perms %}
+                li.onclick = () => { toggleDeleteStatus(`perm-${perm['pk']}`); }
+                {% endif %}
+                roleIn.appendChild(li);
+
+            }
+            else {
+                addHint.classList.remove('hidden');
+                li.classList.add('bg-grey/10');
+                {% if "U-R" in console.perms %}
+                li.onclick = () => { toggleAddStatus(`perm-${perm['pk']}`); }
+                {% endif %}
+                roleOut.appendChild(li);
+            }
+        });
+    }
+    function changeCurrRole(newRole) {
+        currRole = newRole;
+        addHint.classList.add('hidden');
+        addHint.classList.add('hidden');
+        fillRoles();
+    }
+    function toggleDeleteStatus(permId) {
+        const perm = document.getElementById(permId);
+        perm.classList.toggle('!bg-red/70');
+        perm.classList.toggle('!text-white');
+    }
+    function toggleAddStatus(permId) {
+        const perm = document.getElementById(permId);
+        perm.classList.toggle('!bg-green/70');
+        perm.classList.toggle('!text-white');
+    }
+    function saveSelection() {
+        roleIn.childNodes.forEach((li) => {
+            if (li.classList.contains('!bg-red/70')) {
+                const index = rolePerm.indexOf(Number(li.id.split('-')[1]));
+                if (index > -1) {
+                    rolePerm.splice(index, 1);
+                }
+            }
+        });
+        roleOut.childNodes.forEach((li) => {
+            if (li.classList.contains('!bg-green/70')) {
+                rolePerm.push(Number(li.id.split('-')[1]));
+            }
+        });
+        
+        let permString = rolePerm.join(',') + ',';
+        
+        roleIdInput.value = currRole;
+        permStringInput.value = permString;
+        submitButton.click();
+    }
+{% endblock %}
+
+
+{% block workspace %}
+    <div class="">
+        <div class="flex flex-row">
+        <select onchange="changeCurrRole(this.value)" class="text-[24px] font-medium w-[240px] py-[16px] rounded-md" default="{{ roles.first.pk }}">
+            {% for role in roles %}
+                <option value="{{ role.pk }}">{{ role.role_name }}</option>
+            {% endfor %}
+        </select>
+      
+      </div>
+
+        <div>
+            {% if "U-R" in console.perms %}
+            <p class="italic text-grey my-[8px] hidden" id="remove-hint">Click on tiles to remove privileges</p>
+            {% else %}
+            <p class="italic text-grey my-[8px] hidden" id="remove-hint">Current permissions</p>
+            {% endif %}
+            <ul id="role-in" class="perm-list"></ul>
+            {% if "U-R" in console.perms %}
+                <p class="italic text-grey my-[8px] hidden" id="add-hint">Click on tiles to add privileges</p>
+            {% else %}
+                <p class="italic text-grey my-[8px] hidden" id="add-hint">Available permissions</p>
+            {% endif %}
+            <ul id="role-out" class="perm-list"></ul>
+            {% if "U-R" in console.perms %}
+            <button class="save-btn" onclick="saveSelection()">Save</button>
+            {% endif %}
+        </div>
+        {% if "U-R" in console.perms %}
+        <form class="hidden" method="POST" action="{% url 'authorization:update_permissions' team_pk=console.team.id %}">
+            {% csrf_token %}
+            <input name="role-pk" id="role-pk-in" />
+            <input name="perm-string" id="perm-string-in" />
+            <input type="submit" value="Go" id="upt-form-submit" />
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}

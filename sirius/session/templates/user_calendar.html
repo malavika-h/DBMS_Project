@@ -1,0 +1,15 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    Your Calendar
+{% endblock %}
+
+{% block main %}
+<div class="flex flex-col w-full">
+    <div class="module-head">
+        <h2>Your Calendar</h2>
+    </div>
+    <p class="italic text-grey my-[8px]" id="remove-hint">Click on event tiles for additional details</p>
+    {% include 'calendar_util.html' with events=events console=console %}
+</div>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+{{ console.team.name }}
+{% endblock %}
+
+{% block main %}
+<div class="flex flex-row w-full">
+    <script>
+        function showDeletePopup() {
+            var popup = document.getElementById("delete-popup");
+            popup.classList.toggle("hidden");
+        }
+
+        function showLeavePopup() {
+            var popup = document.getElementById("leave-popup");
+            popup.classList.toggle("hidden");
+        }
+
+    </script>
+    <div class="flex flex-col min-w-[320px] mr-8">
+        <aside>
+            <nav class="text-grey w-[280px]">
+                <p class="mb-8 text-[24px]">
+                    {% for parent in console.parents %}
+                        <a href="{% url 'team:team_info' pk=parent.id %}" class="hover:underline">{{ parent.name|upper }} / </a>
+                    {% endfor %}
+                    <span class="text-[36px] font-bold">{{ console.team.name|upper }}</span><span title="{{ console.team.id }}" class="cursor-help">#{{ console.team.id|truncatechars:5 }}</span>
+                </p>
+                <ul>
+                    {% if "R-T" in console.perms %}
+                    <a href="{% url 'team:team_info' pk=console.team.id %}">
+                        <li class="console-navs {% if '/info/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Info</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "R-C" in console.perms or "C-C" in console.perms or "U-C" in console.perms or "D-C" in console.perms %}
+                    <a href="{% url 'team:session:timetable' pk=console.team.id %}">
+                        <li class="console-navs {% if '/timetable/' in request.path or '/class/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Timetable</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "R-E" in console.perms or "C-E" in console.perms or "U-E" in console.perms or "D-E" in console.perms %}
+                    <a href="{% url 'team:session:calendar' pk=console.team.id %}">
+                        <li class="console-navs {% if '/calendar/' in request.path or '/event/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Calendar</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "R-N" in console.perms or "C-N" in console.perms or "U-N" in console.perms or "D-N" in console.perms %}
+                    <a href="{% url 'team:session:notice_board' pk=console.team.id %}">
+                        <li class="console-navs {% if '/notices/' in request.path or '/notice/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Notice Board</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    <a href="#" onclick="showLeavePopup()">
+                        <li class="console-navs {% if '/leave-team/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            </div>
+                            <div class="console-nav-link text-red">
+                                <p>Leave</p>
+                            </div>
+                        </li>
+                    </a>
+                    <hr>
+                    <!-- <li class="text-[24px] pb-2 pt-4 ml-8 border-2"></li> -->
+                    {% if "C-T" in console.perms %}
+                        <a href="{% url 'team:create_sub_team' pk=console.team.id %}">
+                            <li class="console-navs {% if '/new-team/' in request.path %}active-tab{% endif %}">
+                                <div class="active-indicator">
+                                </div>
+                                <div class="console-nav-icon">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </div>
+                                <div class="console-nav-link">
+                                    <p>Create a Team</p>
+                                </div>
+                            </li>
+                        </a>
+                    {% endif %}
+                    {% if "R-R" in console.perms or "U-R" in console.perms %}
+                    <a href="{% url 'authorization:show_permissions' team_pk=console.team.id %}">
+                        <li class="console-navs {% if '/permissions/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-key"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Permissions</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "R-R" in console.perms or "C-R" in console.perms or "R-M" in console.perms or "U-M" in console.perms %}
+                    <a href="{% url 'authorization:show_roles' team_pk=console.team.id %}">
+                        <li class="console-navs {% if '/roles/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Roles</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    <!-- {% if "U-T" in perms %} -->
+                    <!-- <a href="">
+                        <li class="console-navs {% if '/settings/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-gear"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Settings</p>
+                            </div>
+                        </li>
+                    </a> -->
+                    <!-- {% endif %} -->
+                    {% if "R-JR" in console.perms or "C-JR" in console.perms or "U-JR" in console.perms or "D-JR" in console.perms %}
+                    <a href="{% url 'team:join_requests' pk=console.team.id %}">
+                        <li class="console-navs {% if '/join-requests/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-code-merge"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Join requests</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "E-TD" in console.perms %}
+                    <a href="{% url 'team:get_todo_list' pk=console.team.id %}">
+                        <li class="console-navs">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-list"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>To do list</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "V-FA" in console.perms %}
+                    <a href="{% url 'team:view_analytics' pk=console.team.id %}">
+                        <li class="console-navs {% if '/view-analytics/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                            </div>
+                            <div class="console-nav-link">
+                                <p>Feedback analytics</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                    {% if "D-T" in console.perms %}
+                    <a href="#" onclick="showDeletePopup()">
+                        <li class="console-navs {% if '/delete/' in request.path %}active-tab{% endif %}">
+                            <div class="active-indicator">
+                            </div>
+                            <div class="console-nav-icon">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </div>
+                            <div class="console-nav-link text-red">
+                                <p>Delete Team</p>
+                            </div>
+                        </li>
+                    </a>
+                    {% endif %}
+                </ul>
+            </nav>
+        </aside>
+    </div>
+    <div id="delete-popup" class="hidden popup-container">
+        <div  class="popup">
+            <p class="text-[24px] font-semibold">Do you wish to delete the team?</p>
+            <div class="mt-[10px] flex flex-row w-full space-x-5">
+                <a href="{% url 'team:delete_team' pk=console.team.id %}"><button class="popup-yes">YES</button></a>
+                <button class="popup-no" onclick="showDeletePopup()">NO</button>
+            </div>
+        </div>
+    </div>
+    <div id="leave-popup" class="hidden popup-container">
+        <div  class="popup">
+            <p class="text-[24px] font-semibold">Do you wish to leave the team?</p>
+            <div class="mt-[10px] flex flex-row w-full space-x-5">
+                <a href="{% url 'team:leave_team' pk=console.team.id %}"><button class="popup-yes">YES</button></a>
+                <button class="popup-no" onclick="showLeavePopup()">NO</button>
+            </div>
+        </div>
+    </div>
+    <main class="flex grow mt-[10vh] mb-[10vh]">
+        {% block workspace %}
+        {% endblock %}
+    </main>
+</div>
+{% endblock %}

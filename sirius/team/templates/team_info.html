@@ -1,0 +1,74 @@
+{% extends 'console.html' %}
+
+{% load static %}
+
+{% block script %}
+    function copyToClipboard()  {
+        const copyText = document.getElementById("copy-id");
+        const sampleTextarea = document.createElement("textarea");
+        document.body.appendChild(sampleTextarea);
+        sampleTextarea.value = copyText.getAttribute('title'); //save main text in it
+        sampleTextarea.select(); //select textarea contenrs
+        document.execCommand("copy");
+        document.body.removeChild(sampleTextarea);
+    
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const copyButton = document.getElementById('copy-button');
+        const copyMsg = document.getElementById('copy-msg');
+        copyButton.addEventListener("click", (e) => {
+            copyMsg.classList.remove("hidden")
+            setTimeout(() => {
+                copyMsg.classList.add("hidden");
+            }, 1500);
+        });
+    });
+
+{% endblock %}
+
+{% block workspace %}
+<div class="flex flex-col justify-start pl-[10%] w-full">
+    <div class="w-[200px] h-[200px] rounded-full overflow-clip">
+        <img src="https://picsum.photos/300/300" />
+    </div>
+    <div class="font-poppins font-[300] tracking-[0.06rem] text-grey w-[400px]">
+        <p class="text-[18px]">
+            {% for parent in console.parents %}
+                <a href="{% url 'team:team_info' pk=parent.id %}">
+                    <span class="hover:underline">{{parent.name}}</span> / 
+                </a>
+            {% endfor %}
+            <span class="font-[600] text-[40px]">{{console.team.name}}</span>
+            <span title="{{ console.team.id }}" class="font-medium cursor-help" id="copy-id">#{{console.team.id|truncatechars:5}}</span>
+            <i id="copy-button" class='fa-solid fa-copy cursor-pointer inline-flex w-[40px] h-[40px] rounded-full bg-grey/10 justify-center items-center active:bg-grey/30 hover: ml-[16px]' onclick="copyToClipboard()"></i>
+            <span id="copy-msg" class="hidden text-green">Copied!</span>
+        </p>
+        <p>Since {{ console.team.created_at|date:"d/m/Y" }}</p>
+    </div>
+    <div class="flex flex-col mf:flex-row gap-x-[128px] gap-y-[32px]">
+        <section>
+            <h2 class="my-[16px]">Members</h2>
+            <ul>
+                {% for member in members %}
+                    <li class="member-card">
+                        <div>
+                            <p class="member-name">{{ member.user_id__first_name }} {{ member.user_id__last_name }}</p>
+                            <p class="member-username">@{{ member.user_id__username }}</p>
+                        </div>
+                        <p class="member-role">{{ member.role_id__role_name|upper }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2 class="my-[16px]">Teams</h2>
+            <ul class="ml-[40px]">
+                {% for child in children %}
+                    <li class="text-poppins text-[24px] font-[500] my-[16px] hover:scale-[1.02]"><a href="{% url 'team:team_info' pk=child.id %}">{{ child.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+</div>
+{% endblock %}

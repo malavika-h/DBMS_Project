@@ -1,0 +1,26 @@
+{% extends 'console.html' %}
+
+{% block title %}
+    {{ team.name }}
+{% endblock %}
+
+{% block workspace %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Invites</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+                    {% for invite in invites %}
+                                <a href="{{ url 'team:accept_invite' team_id=team.id invite_id=invite.id }}" class="btn btn-success">Accept</a>
+                                <a href="{{ url 'team:decline_invite' team_id=team.id invite_id=invite.id }}" class="btn btn-danger">Decline</a>
+                    {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% endblock %}

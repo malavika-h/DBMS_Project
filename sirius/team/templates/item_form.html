@@ -1,0 +1,13 @@
+{% extends 'console.html' %}
+{% block workspace %}
+<div class="form-wrapper flex items-center w-full">
+    <div>
+        <h2>Add/Edit Task</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% include 'form.html' with form=form %}
+            <input type="submit" value="Save" class="!w-[180px] mx-auto !bg-green">
+        </form>
+    </div>
+</div>
+{% endblock %}
